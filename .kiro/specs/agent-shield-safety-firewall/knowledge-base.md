@@ -2,6 +2,32 @@
 
 > A comprehensive reference for graduate-level students studying Artificial Intelligence, Agentic AI safety, and the formal methods, cryptographic, and regulatory foundations that underpin the KavachAI Zero Trust Safety Firewall.
 
+## Table of Contents
+
+- [1. Agentic AI: From Chatbots to Autonomous Systems](#1-agentic-ai-from-chatbots-to-autonomous-systems)
+- [2. Zero Trust Architecture for AI Agents](#2-zero-trust-architecture-for-ai-agents)
+- [3. Formal Methods for Agent Safety](#3-formal-methods-for-agent-safety)
+  - [3.1 Deterministic Finite Automata (DFA) for Behavioral Modeling](#31-deterministic-finite-automata-dfa-for-behavioral-modeling)
+  - [3.2 Linear Temporal Logic (LTL) for Policy Specification](#32-linear-temporal-logic-ltl-for-policy-specification)
+  - [3.3 Dual-Stage Formal Verification](#33-dual-stage-formal-verification)
+- [4. Domain-Specific Languages (DSLs) for Safety Policies](#4-domain-specific-languages-dsls-for-safety-policies)
+- [5. Cryptographic Audit Trails and Hash Chains](#5-cryptographic-audit-trails-and-hash-chains)
+- [6. Threat Landscape for Agentic AI](#6-threat-landscape-for-agentic-ai)
+  - [6.1 Prompt Injection (Direct and Indirect)](#61-prompt-injection-direct-and-indirect)
+  - [6.2 Sequential Tool Attack Chaining (STAC)](#62-sequential-tool-attack-chaining-stac)
+  - [6.3 Tool Poisoning and Privilege Escalation](#63-tool-poisoning-and-privilege-escalation)
+- [7. Semantic Grounding and Hallucination Prevention](#7-semantic-grounding-and-hallucination-prevention)
+- [8. AI Ethics and Responsible AI](#8-ai-ethics-and-responsible-ai)
+- [9. LLM Evaluation and Red-Teaming](#9-llm-evaluation-and-red-teaming)
+- [10. Model Context Protocol (MCP)](#10-model-context-protocol-mcp)
+- [11. LLM Explainability and Decision Transparency](#11-llm-explainability-and-decision-transparency)
+- [12. Dynamic Trust and Governance-as-a-Service](#12-dynamic-trust-and-governance-as-a-service)
+- [13. India's Regulatory Landscape for AI](#13-indias-regulatory-landscape-for-ai)
+- [14. Multi-Agent Systems and Collective Safety](#14-multi-agent-systems-and-collective-safety)
+- [15. Property-Based Testing for Safety Systems](#15-property-based-testing-for-safety-systems)
+- [Glossary of Key Terms](#glossary-of-key-terms)
+- [References](#references)
+
 ---
 
 ## 1. Agentic AI: From Chatbots to Autonomous Systems

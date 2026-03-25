@@ -1,5 +1,44 @@
 # Technical Design Document — KavachAI: Zero Trust Safety Firewall for Agentic AI
 
+## Table of Contents
+
+- [1. High-Level System Architecture](#1-high-level-system-architecture)
+- [2. Data Models](#2-data-models)
+  - [2.1 Agent Identity](#21-agent-identity)
+  - [2.2 Capability Token](#22-capability-token)
+  - [2.3 Action Request / Verdict](#23-action-request--verdict)
+  - [2.4 Action Attestation](#24-action-attestation)
+  - [2.5 Audit Entry (Hash Chain)](#25-audit-entry-hash-chain)
+  - [2.6 Kill Chain](#26-kill-chain)
+  - [2.7 Semantic Grounding Models](#27-semantic-grounding-models)
+  - [2.8 LLM Evaluation Models](#28-llm-evaluation-models)
+- [3. API Design](#3-api-design)
+  - [3.1 Core Evaluation API](#31-core-evaluation-api)
+  - [3.2 Session & Threat APIs](#32-session--threat-apis)
+  - [3.3 Policy Management APIs](#33-policy-management-apis)
+  - [3.4 Escalation APIs](#34-escalation-apis)
+  - [3.5 LLM Gateway APIs](#35-llm-gateway-apis)
+  - [3.6 LLM Evaluation APIs](#36-llm-evaluation-apis)
+  - [3.7 Compliance & Reporting APIs](#37-compliance--reporting-apis)
+  - [3.8 WebSocket — Real-Time Dashboard Feed](#38-websocket--real-time-dashboard-feed)
+- [4. MCP Proxy Architecture](#4-mcp-proxy-architecture)
+- [5. KavachAI DSL Grammar Specification](#5-kavachai-dsl-grammar-specification)
+- [6. Database Schema — SQLite Audit Trail](#6-database-schema--sqlite-audit-trail)
+- [7. Redis Data Structures](#7-redis-data-structures)
+- [8. Semantic Grounding Layer Architecture](#8-semantic-grounding-layer-architecture)
+- [9. LLM Gateway Routing Logic](#9-llm-gateway-routing-logic)
+- [10. LLM Evaluation Engine Architecture](#10-llm-evaluation-engine-architecture)
+- [11. React Dashboard Component Hierarchy](#11-react-dashboard-component-hierarchy)
+- [12. Deployment Architecture](#12-deployment-architecture)
+- [13. Security Architecture](#13-security-architecture)
+- [14. Zero Trust Evaluation Pipeline — Detailed Flow](#14-zero-trust-evaluation-pipeline--detailed-flow)
+- [15. Project Structure](#15-project-structure)
+- [16. Key Design Decisions](#16-key-design-decisions)
+- [17. Acceptance Criteria Traceability](#17-acceptance-criteria-traceability)
+- [18. Correctness Properties](#18-correctness-properties)
+
+---
+
 ## 1. High-Level System Architecture
 
 ```
