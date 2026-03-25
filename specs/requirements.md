@@ -1,5 +1,47 @@
 # Requirements Document — KavachAI: Zero Trust Safety Firewall for Agentic AI
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Research Foundation](#research-foundation)
+- [Glossary](#glossary)
+- [Requirements](#requirements)
+  - [1. Zero Trust Agent Identity and Authentication](#requirement-1-zero-trust-agent-identity-and-authentication)
+  - [2. KavachAI DSL — Formal Policy Language](#requirement-2-kavachai-dsl--formal-policy-language)
+  - [3. Advanced Threat Detection Engine](#requirement-3-advanced-threat-detection-engine)
+  - [4. DPDP Act 2023 Compliance Engine](#requirement-4-dpdp-act-2023-compliance-engine)
+  - [5. Action Interception and Zero Trust Evaluation Pipeline](#requirement-5-action-interception-and-zero-trust-evaluation-pipeline)
+  - [6. Cryptographic Audit Trail and Evidence Chain](#requirement-6-cryptographic-audit-trail-and-evidence-chain)
+  - [7. Multi-Agent Governance](#requirement-7-multi-agent-governance)
+  - [8. Human-in-the-Loop Escalation with Forensic Context](#requirement-8-human-in-the-loop-escalation-with-forensic-context)
+  - [9. SOC-Style Real-Time Threat Intelligence Dashboard](#requirement-9-soc-style-real-time-threat-intelligence-dashboard)
+  - [10. Law Enforcement Integration and Incident Reporting](#requirement-10-law-enforcement-integration-and-incident-reporting)
+  - [11. Framework-Agnostic SDK and REST API](#requirement-11-framework-agnostic-sdk-and-rest-api)
+  - [12. FastAPI Backend Infrastructure](#requirement-12-fastapi-backend-infrastructure)
+  - [13. Demo Scenario — Multi-Stage Financial Services Attack](#requirement-13-demo-scenario--multi-stage-financial-services-attack)
+  - [14. Formal Policy Verification (Dual-Stage)](#requirement-14-formal-policy-verification-dual-stage)
+  - [15. DFA-Based Behavioral Modeling](#requirement-15-dfa-based-behavioral-modeling)
+  - [16. Dynamic Trust Scoring](#requirement-16-dynamic-trust-scoring)
+  - [17. Determinism Assurance for Regulatory Audit](#requirement-17-determinism-assurance-for-regulatory-audit)
+  - [18. MCP Proxy Gateway Architecture](#requirement-18-mcp-proxy-gateway-architecture)
+  - [19. MCP Safety Server](#requirement-19-mcp-safety-server)
+  - [20. Deployment and Hosting Infrastructure](#requirement-20-deployment-and-hosting-infrastructure)
+  - [21. Multi-LLM Gateway and LLM-as-a-Service](#requirement-21-multi-llm-gateway-and-llm-as-a-service)
+  - [22. AI Ethics and Responsible AI Guardrails](#requirement-22-ai-ethics-and-responsible-ai-guardrails)
+  - [23. Hallucination Detection and Output Grounding](#requirement-23-hallucination-detection-and-output-grounding)
+  - [24. India AI Governance Guidelines Compliance](#requirement-24-india-ai-governance-guidelines-compliance)
+  - [25. LLM Cost and Usage Governance](#requirement-25-llm-cost-and-usage-governance)
+  - [26. LLM Explainability and Decision Transparency](#requirement-26-llm-explainability-and-decision-transparency)
+  - [27. Model Transparency and Provenance](#requirement-27-model-transparency-and-provenance)
+  - [28. LLM Observability and Performance Monitoring](#requirement-28-llm-observability-and-performance-monitoring)
+  - [29. Multi-Tenant Enterprise Deployment](#requirement-29-multi-tenant-enterprise-deployment)
+  - [30. LLM Evaluation and Continuous Safety Benchmarking](#requirement-30-llm-evaluation-and-continuous-safety-benchmarking)
+  - [31. Semantic Grounding Layer](#requirement-31-semantic-grounding-layer)
+- [Technology Stack Rationale and Deployment Model](#technology-stack-rationale-and-deployment-model)
+- [References and Acknowledgments](#references-and-acknowledgments)
+
+---
+
 ## Introduction
 
 KavachAI is a production-grade, Zero Trust safety firewall for autonomous AI agent systems — designed as critical national security infrastructure for governing agentic AI in India. Built for the ISB Hackathon on Cybersecurity & AI Safety 2025-26 (Agentic AI Safety track, organized by ISB Mohali with Punjab Police and CyberPeace Foundation), KavachAI addresses a fundamental gap in the current AI ecosystem: the absence of a comprehensive, enforceable, and auditable governance layer for AI agents that autonomously invoke tools, access data, and make decisions.
