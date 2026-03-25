@@ -87,6 +87,8 @@
     └─────────────┘                └─────────────┘
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 ## 2. Data Models
 
 ### 2.1 Agent Identity
@@ -302,6 +304,8 @@ class RedTeamResult:
     run_at: datetime
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 ## 3. API Design
 
 ### 3.1 Core Evaluation API
@@ -439,6 +443,8 @@ WS /ws/dashboard
     { type: "budget_warning", agent_id, budget_used_pct }
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 ## 4. MCP Proxy Architecture
 
 ```
@@ -542,6 +548,8 @@ class MCPSafetyServer:
         return {"verdict": verdict.verdict, "matched_rules": verdict.matched_policies,
                 "reasoning": verdict.reasoning_trace}
 ```
+
+[↑ Back to Top](#table-of-contents)
 
 ## 5. KavachAI DSL Grammar Specification
 
@@ -653,6 +661,8 @@ workflow customer_service {
 
 ensure fairness in loan_processing for all demographic_groups
 ```
+
+[↑ Back to Top](#table-of-contents)
 
 ## 6. Database Schema — SQLite Audit Trail
 
@@ -834,6 +844,8 @@ CREATE TABLE tenants (
 );
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 ## 7. Redis Data Structures
 
 ```
@@ -887,6 +899,8 @@ model:{model_name}:safety_score       → INT (latest Model_Safety_Score)
 # Real-time dashboard pub/sub
 channel:dashboard:{tenant_id}         → PUB/SUB channel for WebSocket feed
 ```
+
+[↑ Back to Top](#table-of-contents)
 
 ## 8. Semantic Grounding Layer Architecture
 
@@ -1016,6 +1030,8 @@ class SemanticGroundingLayer:
         )
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 ## 9. LLM Gateway Routing Logic
 
 ```
@@ -1127,6 +1143,8 @@ class LLMGateway:
             return self.get_default_model(request.tenant_id)
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 ## 10. LLM Evaluation Engine Architecture
 
 ```python
@@ -1197,6 +1215,8 @@ class RedTeamRunner:
             degraded=abs(safety_delta) > 10, run_at=datetime.utcnow()
         )
 ```
+
+[↑ Back to Top](#table-of-contents)
 
 ## 11. React Dashboard Component Hierarchy
 
@@ -1315,6 +1335,8 @@ SOCDashboard (App)
     └── PDFExporter
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 ## 12. Deployment Architecture
 
 ```
@@ -1402,6 +1424,8 @@ services:
       - kavachai
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 ## 13. Security Architecture
 
 ```
@@ -1468,6 +1492,8 @@ services:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 ## 14. Zero Trust Evaluation Pipeline — Detailed Flow
 
 ```python
@@ -1515,6 +1541,8 @@ class EvalPipeline:
 
         return final_verdict
 ```
+
+[↑ Back to Top](#table-of-contents)
 
 ## 15. Project Structure
 
@@ -1637,6 +1665,8 @@ kavachai/
 └── README.md
 ```
 
+[↑ Back to Top](#table-of-contents)
+
 ## 16. Key Design Decisions
 
 | Decision | Choice | Rationale |
@@ -1654,6 +1684,8 @@ kavachai/
 | Knowledge graph storage | SQLite JSON + optional Neo4j | JSON columns for hackathon simplicity, Neo4j adapter for enterprise |
 | LLM evaluation | Automated benchmarks | Systematic, repeatable, auditable — not ad-hoc manual testing |
 | Deployment | Railway + Vercel + Docker | Railway for backend (Redis addon), Vercel for static dashboard, Docker for offline |
+
+[↑ Back to Top](#table-of-contents)
 
 ## 17. Acceptance Criteria Traceability
 
@@ -1690,6 +1722,8 @@ kavachai/
 | R29: Multi-Tenant | tenant_id on all models, Tenant_Isolation, scoped queries |
 | R30: LLM Evaluation | `llm/eval_engine.py`, `llm/red_team.py`, Safety_Benchmarks |
 | R31: Semantic Grounding | `grounding/` package, Knowledge_Graph, Deterministic_Validator |
+
+[↑ Back to Top](#table-of-contents)
 
 ## 18. Correctness Properties
 
@@ -1752,3 +1786,5 @@ kavachai/
 - Type: Idempotence
 - Description: The Deterministic_Validator produces identical results for identical inputs across multiple invocations — no randomness, no LLM dependency.
 - Test: Run validator on same input 100 times, verify all results are identical.
+
+[↑ Back to Top](#table-of-contents)

@@ -53,6 +53,8 @@ McKinsey reports that 80% of organizations have already encountered risky behavi
 
 This motivates the entire KavachAI architecture: every workflow must be fully reconstructable, every decision auditable, and every agent action governed.
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## 2. Zero Trust Architecture for AI Agents
@@ -97,6 +99,8 @@ CapabilityToken:
 ```
 
 This is fundamentally different from traditional role-based access control (RBAC), where a "customer service" role might grant broad access. Capability tokens enforce the principle of least privilege at the individual tool-call level.
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -174,6 +178,8 @@ VeriGuard (arXiv:2510.05156) introduces a critical architectural pattern: separa
 
 This separation matters enormously for performance. Formal verification is computationally expensive (potentially NP-hard for complex policy sets). By doing it once at deployment time, the runtime cost drops to milliseconds per action — critical for KavachAI's <100ms latency target.
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## 4. Domain-Specific Languages (DSLs) for Safety Policies
@@ -217,6 +223,8 @@ rule block_unauthorized_payment {
 ShieldAgent (arXiv:2503.22738) introduces **Probabilistic Rule Circuits** — directed acyclic graphs (DAGs) of policy rules with associated probability weights. Instead of evaluating rules independently, the circuit captures dependencies between rules and computes a composite safety score. This outperforms prior methods by 11.3% while reducing API queries by 64.7% and inference time by 58.2%.
 
 KavachAI's Policy Engine constructs probabilistic rule circuits from compiled DSL policies, enabling efficient evaluation of complex, interdependent policy sets.
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -265,6 +273,8 @@ Each attestation is cryptographically signed by KavachAI, proving that a specifi
 
 For law enforcement and regulatory proceedings, KavachAI produces **Evidence Packages** — exportable, cryptographically signed bundles of audit entries for a specific incident. These packages maintain **chain of custody**: a verifiable sequence documenting every handler and decision point, suitable for judicial proceedings and CERT-In reporting.
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## 6. Threat Landscape for Agentic AI
@@ -295,6 +305,8 @@ KavachAI's Attack Chain Analyzer defends against STAC by maintaining session-lev
 
 **Privilege escalation** in the agentic context means an agent progressively expanding its capabilities beyond its authorized scope — accessing admin tools, bypassing parameter constraints, or delegating tasks to less-restricted agents. KavachAI's capability token system and DFA behavioral models detect these patterns by tracking the agent's state transitions against its authorized workflow.
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## 7. Semantic Grounding and Hallucination Prevention
@@ -321,6 +333,8 @@ The Neuro-Symbolic Framework (arXiv:2512.20275) demonstrates a critical finding:
 ### Why the Grounding Layer Must Not Use an LLM
 
 This is a subtle but critical architectural decision. If you use an LLM to verify another LLM's output, you create a **circular dependency** — the verifier is subject to the same hallucination risks as the generator. KavachAI's semantic grounding layer is entirely deterministic: graph traversal, schema validation, regex matching, and numerical consistency checks. No LLM is involved in the verification path.
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -366,6 +380,8 @@ KavachAI maps its capabilities to each Sutra, providing a compliance posture das
 - **DPDP Act 2023**: India's data protection law requiring consent management, data localization, breach notification, and right to erasure (covered in detail in Section 13).
 - **EU AI Act**: Establishes risk-based classification of AI systems with right-to-explanation requirements for high-risk applications.
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## 9. LLM Evaluation and Red-Teaming
@@ -389,6 +405,8 @@ Each dimension produces a sub-score, weighted and combined into an overall **Mod
 ### Automated Red-Teaming
 
 Red-teaming is the practice of adversarially testing a system to find vulnerabilities. KavachAI automates this by generating adversarial test cases — crafted prompts designed to elicit unsafe behavior — and measuring the model's resistance. Results are tracked over time to detect **model drift**: gradual degradation in safety properties as models are updated or fine-tuned.
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -423,6 +441,8 @@ MCP Client (Agent) ←→ KavachAI MCP Proxy ←→ MCP Server (Tools)
 
 The proxy intercepts `tools/list` to filter unauthorized tools (based on capability tokens) and intercepts `tools/call` to run the full evaluation pipeline before forwarding permitted calls. This is informed by the Capability-Enhanced MCP Framework (arXiv:2601.08012), which proposes structured capability labels on tool definitions specifying category, confidentiality level, and required trust level.
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## 11. LLM Explainability and Decision Transparency
@@ -450,6 +470,8 @@ Following the principle from arXiv:2511.07086, KavachAI separates opaque LLM rea
 ### Model Cards and Provenance
 
 Every LLM used within KavachAI is documented with a **Model Provenance Record** — including model name, version, training data characteristics, known limitations, safety evaluation scores, and deployment constraints. This enables regulatory auditors to assess model appropriateness and trace decisions back to specific model versions.
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -483,6 +505,8 @@ An important property: trust is not permanent. **Trust decay** gradually reduces
 
 A key architectural principle: KavachAI governs agent behavior **without modifying model internals**. The system operates as an external governance layer — intercepting actions at the protocol level (MCP proxy) rather than fine-tuning or constraining the model itself. This means KavachAI works with any LLM, any agent framework, and any tool server.
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## 13. India's Regulatory Landscape for AI
@@ -504,6 +528,8 @@ The Seven Sutras (detailed in Section 8) provide the national framework. KavachA
 ### CERT-In Incident Reporting
 
 India's Computer Emergency Response Team (CERT-In) requires timely reporting of cybersecurity incidents. KavachAI's Incident Report generator produces structured reports in CERT-In format, including timeline, affected systems, attack vector analysis, and remediation steps — all backed by cryptographic audit trail evidence.
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -528,6 +554,8 @@ MAS-Shield (arXiv:2511.22924) addresses a subtle threat: **agent collusion**. Tw
 - Agent B sends the data externally (permitted by its role, since it "received" the data legitimately).
 
 Neither agent violated its individual policy, but the collective behavior constitutes data exfiltration. KavachAI detects this through **cross-session action graphs** — analyzing information flow across agent boundaries to identify coordinated policy circumvention.
+
+[↑ Back to Top](#table-of-contents)
 
 ---
 
@@ -571,6 +599,8 @@ Examples of property-based tests in the KavachAI system:
 - **PII masking completeness**: For any string containing Aadhaar, PAN, or mobile number patterns, the masker's output contains zero matches for those patterns.
 - **Capability token scoping**: For any action request, if the requested tool is not in the agent's capability token, the verdict is always BLOCK.
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## Glossary of Key Terms
@@ -608,6 +638,8 @@ Examples of property-based tests in the KavachAI system:
 | **Trust Score** | A dynamic score (0.0–1.0) assigned to each agent based on cumulative compliance history, modulating enforcement strictness. |
 | **Zero Trust Architecture** | A security model where no agent action is implicitly trusted; every request is authenticated, authorized, and verified regardless of origin. |
 
+[↑ Back to Top](#table-of-contents)
+
 ---
 
 ## References
@@ -636,3 +668,5 @@ Examples of property-based tests in the KavachAI system:
 22. NIST AI Risk Management Framework (AI RMF 1.0)
 23. Digital Personal Data Protection Act 2023 (India)
 24. DFAH — Determinism-Faithfulness Assurance Harness. arXiv:2601.15322
+
+[↑ Back to Top](#table-of-contents)

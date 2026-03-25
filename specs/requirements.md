@@ -66,6 +66,8 @@ Every agent decision is explainable at multiple levels — the LLM's own chain-o
 
 **Demo Scenario:** A financial services AI agent handling customer queries is targeted by a sophisticated multi-stage attack — indirect prompt injection via a crafted customer message, attempted exfiltration of Aadhaar numbers through seemingly innocent API responses, privilege escalation to admin-level tool access, and covert data channeling via steganographic encoding in output payloads. KavachAI detects and neutralizes each attack stage, with the SOC dashboard rendering the full kill chain in real time.
 
+[↑ Back to Top](#table-of-contents)
+
 ## Research Foundation
 
 KavachAI's architecture is grounded in cutting-edge research from the AI safety, formal methods, and enterprise governance communities. The following works directly inform the system's design and requirements:
@@ -109,6 +111,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 19. **OpenAgentSafety — Comprehensive Agent Safety Evaluation** (arXiv:2507.06134): A modular framework for evaluating agent behavior across eight critical risk categories. Combines rule-based evaluation with LLM-as-judge assessments to detect both overt and subtle unsafe behaviors. KavachAI implements continuous LLM evaluation inspired by this framework.
 
 20. **Neuro-Symbolic Framework for Safe Agentic AI** (arXiv:2512.20275): Demonstrates a three-layer Governance Triad combining a domain-adapted agent with a Network Knowledge Graph and SHACL constraints. Key finding: even high-performing domain agents require deterministic graph validation to achieve verifiable safety compliance. KavachAI's Semantic Grounding Layer implements this principle of pairing LLM reasoning with deterministic knowledge validation.
+
+[↑ Back to Top](#table-of-contents)
 
 ## Glossary
 
@@ -226,6 +230,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 - **Source_Attribution**: A structured reference linking each claim in an agent's output to the specific knowledge source (document, knowledge graph node, tool response) that supports it.
 - **Deterministic_Validator**: A non-LLM component that performs rule-based, schema-based, and graph-based validation of agent outputs — providing verification that does not depend on probabilistic LLM judgment.
 
+[↑ Back to Top](#table-of-contents)
+
 ## Requirements
 
 ### Requirement 1: Zero Trust Agent Identity and Authentication
@@ -242,6 +248,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 6. THE Agent_Identity_Manager SHALL support revocation of Agent_Identities and Capability_Tokens, with revocation taking effect within 1 second across all KavachAI components.
 7. WHEN a Capability_Token expires, THE Zero_Trust_Engine SHALL reject all subsequent Action_Requests using that token until a new token is issued.
 8. THE Zero_Trust_Engine SHALL enforce least-privilege by default — agents receive the minimum Capability_Token scope required for their declared task.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 2: KavachAI DSL — Formal Policy Language
 
@@ -266,6 +274,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 15. WHEN evaluating an Action_Request, THE Policy_Engine SHALL traverse the Probabilistic_Rule_Circuit to determine the applicable rules and compute a weighted policy compliance score, reducing redundant rule evaluations.
 16. THE KavachAI_DSL SHALL use human-readable, plain-English-like syntax for all constructs including LTL operators and trigger-predicate-enforcement patterns, so that policy authors without formal methods training can write and understand policies. Accessibility note: the DSL documentation SHALL include annotated examples for every construct, and the SOC_Dashboard SHALL provide a visual policy builder as an alternative to raw DSL authoring.
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 3: Advanced Threat Detection Engine
 
 **User Story:** As a cybersecurity analyst, I want KavachAI to detect sophisticated attack vectors including prompt injection, tool poisoning, privilege escalation, covert data exfiltration, sequential tool attack chains (STAC), and multi-step attack chains, so that agents are protected against adversarial threats beyond simple policy violations.
@@ -287,6 +297,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 13. THE Attack_Chain_Analyzer SHALL maintain a cumulative effect model per session that tracks the aggregate state changes, data flows, and permission usage across all actions, enabling detection of STAC_Attacks where each individual action appears benign but the cumulative sequence achieves a harmful objective.
 14. WHEN the Attack_Chain_Analyzer detects a STAC_Attack pattern, THE Attack_Chain_Analyzer SHALL generate a STAC-specific Kill_Chain object that identifies the individually benign actions, the cumulative harmful effect, and the point at which the chain became harmful.
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 4: DPDP Act 2023 Compliance Engine
 
 **User Story:** As a compliance officer operating in India, I want KavachAI to enforce Digital Personal Data Protection Act 2023 requirements automatically, so that AI agent operations comply with Indian data protection law without manual oversight.
@@ -303,6 +315,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 8. THE DPDP_Compliance_Engine SHALL support configurable data retention policies that automatically flag or delete personal data held beyond the specified retention period.
 9. WHEN a data principal exercises the right to erasure, THE DPDP_Compliance_Engine SHALL identify all Audit_Entries and cached data containing the data principal's personal data and mark the entries for redaction while preserving the Hash_Chain integrity.
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 5: Action Interception and Zero Trust Evaluation Pipeline
 
 **User Story:** As a safety engineer, I want every agent tool call to pass through a Zero Trust evaluation pipeline that authenticates, authorizes, scans for threats, checks compliance, and attests the result, so that no unsafe action can bypass governance.
@@ -317,6 +331,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 6. WHEN the Policy_Engine returns a FLAG verdict, THE Action_Interceptor SHALL permit the tool call, generate the Action_Attestation, and record a warning with the Threat_Score in the Cryptographic_Audit_Trail.
 7. WHEN the Action_Interceptor receives a QUARANTINE verdict, THE Action_Interceptor SHALL block the current action, suspend the agent session, preserve all session state for forensic analysis, and notify the SOC_Dashboard.
 8. THE Action_Interceptor SHALL support concurrent evaluation of Action_Requests from multiple agent sessions without cross-session data leakage.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 6: Cryptographic Audit Trail and Evidence Chain
 
@@ -334,6 +350,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 8. THE Cryptographic_Audit_Trail SHALL assign monotonically increasing sequence numbers to entries within each session to detect deletion attacks.
 9. IF the Cryptographic_Audit_Trail fails to persist an Audit_Entry, THEN THE Cryptographic_Audit_Trail SHALL retry the write operation up to 3 times, and if all retries fail, THE Cryptographic_Audit_Trail SHALL halt the agent session to prevent unaudited actions.
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 7: Multi-Agent Governance
 
 **User Story:** As a platform operator running multi-agent systems, I want KavachAI to monitor and govern interactions between multiple agents, so that coordinated attacks, unauthorized delegation, and collusion between agents are detected and prevented.
@@ -349,6 +367,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 7. THE Multi_Agent_Governor SHALL enforce that each agent in a multi-agent system has a distinct Agent_Identity and cannot impersonate another agent.
 8. THE Multi_Agent_Governor SHALL record all inter-agent communications in the Cryptographic_Audit_Trail with both sender and receiver agent identity hashes.
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 8: Human-in-the-Loop Escalation with Forensic Context
 
 **User Story:** As a security operations analyst, I want escalated actions to arrive with full forensic context including threat analysis, kill chain position, and compliance impact, so that I can make informed approval or rejection decisions rapidly.
@@ -362,6 +382,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 5. THE Escalation_Manager SHALL support configurable Escalation_Timeout values per policy rule, with a system-wide default of 60 seconds.
 6. WHILE an Action_Request is pending human approval, THE Escalation_Manager SHALL prevent the agent from issuing duplicate requests for the same action and SHALL prevent the agent from issuing actions that depend on the pending action's result.
 7. THE Escalation_Manager SHALL prioritize escalation notifications by Threat_Score, displaying higher-threat escalations more prominently on the SOC_Dashboard.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 9: SOC-Style Real-Time Threat Intelligence Dashboard
 
@@ -380,6 +402,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 9. THE SOC_Dashboard SHALL support exporting the current dashboard view as a PDF report and exporting session data as an Evidence_Package.
 10. THE SOC_Dashboard SHALL display the Delegation_Chain graph for multi-agent sessions, showing which agents delegated tasks to which other agents and the permission scopes transferred.
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 10: Law Enforcement Integration and Incident Reporting
 
 **User Story:** As a law enforcement officer investigating AI-related cybercrime, I want evidence-grade audit trails, automated incident reports, and CERT-In compatible reporting, so that agent security incidents can be investigated and prosecuted using legally admissible evidence.
@@ -393,6 +417,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 5. WHEN a law enforcement officer requests an Evidence_Package for a specific time range and agent session, THE KavachAI SHALL generate the package within 30 seconds for sessions containing up to 10,000 Audit_Entries.
 6. THE Incident_Report SHALL include a human-readable narrative summary of the incident suitable for non-technical stakeholders, generated from the structured incident data.
 7. THE KavachAI SHALL provide webhook integration hooks for forwarding incident alerts to external Security Information and Event Management (SIEM) systems and CERT-In reporting portals.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 11: Framework-Agnostic SDK and REST API
 
@@ -413,6 +439,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 11. IF an API request contains malformed JSON or missing required fields, THEN THE KavachAI SHALL return HTTP 400 with a descriptive error message identifying the validation failures.
 12. WHEN the LangChain Framework_Adapter is added to a LangChain agent, THE adapter SHALL integrate with 5 or fewer lines of configuration code.
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 12: FastAPI Backend Infrastructure
 
 **User Story:** As a DevOps engineer, I want the KavachAI backend to be a robust FastAPI application with Redis-backed real-time state management, so that the system can handle concurrent agent sessions with low latency.
@@ -427,6 +455,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 6. THE KavachAI SHALL authenticate all API requests using API key authentication via the X-API-Key header, with API keys stored as salted SHA-256 hashes.
 7. THE KavachAI SHALL implement CORS configuration allowing the SOC_Dashboard origin to access all API endpoints.
 8. WHEN the KavachAI process starts, THE KavachAI SHALL validate the integrity of the Cryptographic_Audit_Trail by verifying the hash chain for each active session.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 13: Demo Scenario — Multi-Stage Financial Services Attack
 
@@ -446,6 +476,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 10. THE SOC_Dashboard SHALL display the full demo session timeline, Compliance_Posture, and Kill_Chain_View within 2 seconds of each action completing.
 11. THE demo scenario SHALL demonstrate the Ethics_Engine by having the demo agent generate a biased loan recommendation based on regional bias in the customer data, which THE Bias_Detector SHALL detect and flag, and THE SOC_Dashboard SHALL display the ethics violation alongside the security kill chain.
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 14: Formal Policy Verification (Dual-Stage)
 
 **User Story:** As a security architect, I want KavachAI policies to be formally verified for correctness before deployment and lightweight-checked at runtime, so that the system provides formal safety guarantees without sacrificing runtime performance — inspired by VeriGuard's dual-stage approach (arXiv:2510.05156).
@@ -460,6 +492,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 6. THE Runtime_Policy_Monitor SHALL add less than 5 milliseconds of overhead per action evaluation beyond the base Policy_Engine evaluation time.
 7. WHEN the Runtime_Policy_Monitor detects an action that falls outside the pre-verified policy's coverage (an edge case not covered by offline verification), THE Runtime_Policy_Monitor SHALL escalate the action to the full Policy_Engine for comprehensive evaluation and log the coverage gap for subsequent offline verification.
 8. THE Formal_Policy_Verifier SHALL complete offline verification of a policy containing up to 100 rules within 30 seconds. Accessibility note: verification results SHALL be presented in plain language with clear pass/fail indicators and actionable fix suggestions, not raw formal logic output.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 15: DFA-Based Behavioral Modeling
 
@@ -477,6 +511,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 8. THE SOC_Dashboard SHALL display the DFA_Behavioral_Model as an interactive state diagram, highlighting the agent's current state, the path taken, and any invalid transitions attempted.
 9. THE KavachAI SHALL support defining DFA_Behavioral_Models via the KavachAI DSL using a workflow definition syntax, and via a visual editor in the SOC_Dashboard for users who prefer graphical workflow design. Accessibility note: the visual DFA editor SHALL provide drag-and-drop state and transition creation, making behavioral modeling accessible without requiring automata theory knowledge.
 10. THE Zero_Trust_Engine SHALL evaluate DFA state transitions within 5 milliseconds per action.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 16: Dynamic Trust Scoring
 
@@ -496,6 +532,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 10. THE SOC_Dashboard SHALL display each agent's Trust_Score, Trust_Level, trust history trend, and the factors contributing to trust changes. Accessibility note: trust levels SHALL be displayed with intuitive color coding and plain-language descriptions (e.g., "This agent has a strong compliance track record" for TRUSTED level).
 11. THE Cryptographic_Audit_Trail SHALL record all Trust_Score changes with the triggering event, previous score, new score, and the Trust_Level transition (if any).
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 17: Determinism Assurance for Regulatory Audit
 
 **User Story:** As a compliance officer in Indian financial services, I want KavachAI to track whether agents produce consistent decisions for identical inputs, so that regulatory auditors can verify agent behavior is reproducible and compliant with DPDP Act requirements — inspired by DFAH research (arXiv:2601.15322).
@@ -511,6 +549,9 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 7. THE SOC_Dashboard SHALL provide an audit replay interface where compliance officers can select a session, initiate replay, and view the Determinism_Report with side-by-side comparison of original and replayed evaluations. Accessibility note: the replay interface SHALL present results in a clear tabular format with color-coded match/mismatch indicators, designed for compliance officers who may not have technical backgrounds.
 8. THE KavachAI SHALL support batch audit replay for multiple sessions, generating aggregate determinism statistics suitable for regulatory reporting to Indian financial services authorities under DPDP Act compliance requirements.
 9. THE Determinism_Report SHALL be exportable as part of an Evidence_Package for submission to regulatory authorities, with cryptographic signatures ensuring report integrity.
+
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 18: MCP Proxy Gateway Architecture
 
 **User Story:** As a platform operator, I want KavachAI to operate as a transparent MCP proxy gateway that intercepts all tool calls between any MCP-compatible agent and any MCP server, so that safety governance is protocol-native and requires zero code changes in agents or tools.
@@ -530,6 +571,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 11. THE MCP_Proxy_Gateway SHALL log all intercepted tool calls, forwarded requests, and responses in the Cryptographic_Audit_Trail with full MCP protocol metadata.
 12. Accessibility note: configuring the MCP_Proxy_Gateway SHALL require only changing the MCP server URL in the agent's configuration — no agent code changes, no tool server changes. A single configuration line redirects all tool traffic through KavachAI.
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 19: MCP Safety Server
 
 **User Story:** As an AI agent developer, I want KavachAI to expose safety tools via MCP so that agents can proactively query their own safety constraints, check policies before acting, and request escalations through the standard MCP protocol.
@@ -543,6 +586,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 5. WHEN an agent calls the report_suspicious_input tool, THE MCP_Safety_Server SHALL log the reported input in the Cryptographic_Audit_Trail, run the Prompt_Injection_Detector on the input, and return the Threat_Score.
 6. THE MCP_Safety_Server SHALL authenticate all tool calls using the agent's Agent_Identity, ensuring that agents can only query their own permissions and compliance status.
 7. Accessibility note: the MCP_Safety_Server enables a "safety-aware agent" pattern where agents can be instructed (via system prompt) to check policies before taking risky actions — making safety a collaborative process between the agent and the governance layer.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 20: Deployment and Hosting Infrastructure
 
@@ -559,6 +604,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 7. THE KavachAI SHALL include a demo launch script that starts the demo financial services agent, connects it through the MCP_Proxy_Gateway, and triggers the multi-stage attack scenario with a single command.
 8. THE demo launch script SHALL work in both cloud-hosted and local Docker modes without configuration changes beyond an environment flag.
 9. Accessibility note: the deployment process SHALL be documented with step-by-step instructions suitable for hackathon judges who may want to run the system themselves, including a one-click deploy button for Railway.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 21: Multi-LLM Gateway and LLM-as-a-Service
 
@@ -578,6 +625,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 10. THE LLM_Gateway SHALL support configuring model-specific safety constraints: for example, requiring human approval for requests to high-capability models that exceed a token threshold.
 11. Accessibility note: the LLM_Gateway SHALL provide a dashboard view in the SOC_Dashboard showing real-time LLM usage statistics, cost breakdown by model/agent/session, and model availability status.
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 22: AI Ethics and Responsible AI Guardrails
 
 **User Story:** As a responsible AI practitioner, I want KavachAI to enforce comprehensive AI ethics guardrails covering bias detection, toxicity filtering, fairness monitoring, and content safety, so that AI agents operate within ethical boundaries aligned with India's AI Governance Guidelines and global responsible AI standards.
@@ -596,6 +645,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 10. THE Cryptographic_Audit_Trail SHALL record all ethics evaluations, including the Ethics_Score, detected violations, and the specific ethical dimension violated, for each agent action that produces output.
 11. Accessibility note: ethics violations SHALL be displayed on the SOC_Dashboard with clear, non-technical explanations of what was detected and why it was flagged, suitable for compliance officers and ethics review boards.
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 23: Hallucination Detection and Output Grounding
 
 **User Story:** As a safety engineer, I want KavachAI to detect when agents hallucinate tool results, fabricate data, or present unverified claims as facts, so that end users receive only grounded, verified information — inspired by tool receipts research (arXiv:2603.10060).
@@ -612,6 +663,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 8. THE SOC_Dashboard SHALL display a grounding verification view for each agent session, showing which agent claims are grounded in tool responses (green), partially grounded (yellow), or ungrounded (red).
 9. Accessibility note: the grounding verification view SHALL present results in a simple claim-by-claim format with clear source attribution, making it easy for non-technical reviewers to verify agent output accuracy.
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 24: India AI Governance Guidelines Compliance
 
 **User Story:** As a government compliance officer, I want KavachAI to map its capabilities to India's AI Governance Guidelines 2025 ("Seven Sutras") and generate compliance reports, so that organizations can demonstrate alignment with India's national AI governance framework.
@@ -625,6 +678,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 5. THE Seven_Sutras_Compliance report SHALL be exportable as a PDF document suitable for submission to MeitY or other regulatory bodies.
 6. THE KavachAI DSL SHALL support ethics-specific policy constructs that map directly to the Seven Sutras (e.g., "ENSURE fairness IN loan_processing FOR ALL demographic_groups" maps to Fairness & Equity).
 7. Accessibility note: the Seven Sutras compliance report SHALL use plain language and visual indicators (radar charts, progress bars, color coding) to make governance compliance understandable to non-technical stakeholders including government officials and policy makers.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 25: LLM Cost and Usage Governance
 
@@ -640,6 +695,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 6. THE SOC_Dashboard SHALL display a real-time cost dashboard showing LLM spending by model, agent, session, and time period, with trend charts and budget utilization gauges.
 7. THE Cryptographic_Audit_Trail SHALL record the LLM cost for each action that involved an LLM request, enabling cost attribution in Evidence_Packages and audit reports.
 8. Accessibility note: the cost dashboard SHALL present spending data in clear, business-friendly formats (currency amounts, percentage of budget used, projected monthly spend) suitable for finance teams and management.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 26: LLM Explainability and Decision Transparency
 
@@ -657,6 +714,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 8. THE Cryptographic_Audit_Trail SHALL store the LLM_Reasoning_Capture as part of each Audit_Entry, cryptographically linked to the action it explains, ensuring that explanations cannot be retroactively altered.
 9. Accessibility note: the User_Facing_Explanation SHALL use plain language at a reading level accessible to the general public (target: 8th grade reading level), avoid technical jargon, and include a clear statement of what the individual can do if they disagree with the decision (e.g., contact information for human review).
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 27: Model Transparency and Provenance
 
 **User Story:** As a regulatory auditor, I want full transparency into which LLM models are being used, their known limitations, and their provenance, so that I can assess whether the models are appropriate for the decisions being made.
@@ -671,6 +730,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 6. THE LLM_Gateway SHALL flag when an agent uses a model that has known limitations relevant to the current task (e.g., using a model with known bias in financial decisions for a loan processing task) and record the flag in the Cryptographic_Audit_Trail.
 7. THE Model Transparency Report SHALL be exportable as part of an Evidence_Package, with cryptographic signatures ensuring integrity.
 8. Accessibility note: Model_Cards SHALL be displayed in a structured, readable format on the SOC_Dashboard with clear sections for limitations and bias information, making it easy for non-ML-experts to understand model characteristics.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 28: LLM Observability and Performance Monitoring
 
@@ -687,6 +748,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 7. THE Cryptographic_Audit_Trail SHALL record LLM performance metrics (latency, token count, model version) for each LLM request, enabling historical performance analysis in Evidence_Packages.
 8. Accessibility note: the LLM Observability panel SHALL use traffic-light indicators (green/yellow/red) for model health status, making it immediately clear to operations teams which models need attention.
 
+[↑ Back to Top](#table-of-contents)
+
 ### Requirement 29: Multi-Tenant Enterprise Deployment
 
 **User Story:** As an enterprise architect deploying KavachAI across multiple business units, I want strict tenant isolation so that each business unit has its own policies, agents, budgets, and audit trails without cross-tenant data leakage.
@@ -701,6 +764,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 6. THE Cryptographic_Audit_Trail SHALL include the Tenant identifier in each Audit_Entry, and queries SHALL be automatically scoped to the requesting Tenant's data.
 7. THE KavachAI SHALL enforce Tenant-level rate limits to prevent one Tenant's workload from degrading performance for other Tenants.
 8. Accessibility note: Tenant onboarding SHALL be achievable through a self-service wizard in the SOC_Dashboard that guides administrators through policy configuration, agent registration, and LLM setup with step-by-step instructions.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 30: LLM Evaluation and Continuous Safety Benchmarking
 
@@ -717,6 +782,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 7. THE LLM_Eval_Engine SHALL maintain a historical record of all model evaluations in the Cryptographic_Audit_Trail, enabling auditors to verify that models were properly evaluated before deployment.
 8. THE SOC_Dashboard SHALL display a Model Evaluation dashboard showing each model's current Model_Safety_Score, historical score trends, benchmark breakdowns, and the date of last evaluation.
 9. Accessibility note: evaluation reports SHALL present results in clear pass/fail format with plain-language explanations of what each benchmark tests and why the model passed or failed, suitable for non-ML stakeholders approving model deployments.
+
+[↑ Back to Top](#table-of-contents)
 
 ### Requirement 31: Semantic Grounding Layer
 
@@ -735,6 +802,8 @@ KavachAI's architecture is grounded in cutting-edge research from the AI safety,
 9. THE SOC_Dashboard SHALL display a Grounding Report for each agent session showing the Grounding_Score, Source_Attributions, and any claims flagged as ungrounded, with the ability to drill down into the knowledge sources used for verification.
 10. THE Semantic_Grounding_Layer SHALL support loading Knowledge_Graphs and Domain_Ontologies from configurable sources: local JSON/YAML files, external graph databases (Neo4j), or API endpoints — enabling integration with existing enterprise knowledge management systems.
 11. Accessibility note: the Grounding Report SHALL present source attributions in a simple "claim → source" format, making it immediately clear to non-technical reviewers which agent statements are backed by verified data and which are not.
+
+[↑ Back to Top](#table-of-contents)
 
 ## Technology Stack Rationale and Deployment Model
 
@@ -763,6 +832,8 @@ KavachAI uses a hybrid cloud + local deployment model:
 3. **Why not AWS/GCP/Azure?** — For a hackathon demo, managed cloud platforms add unnecessary complexity (IAM, VPC, security groups) without proportional benefit. Railway and Vercel provide the same reliability with zero infrastructure management. The architecture is cloud-agnostic — migrating to AWS (ECS + ElastiCache + RDS) or GCP (Cloud Run + Memorystore) requires only configuration changes, not code changes.
 
 4. **Data Sovereignty** — All data (audit trails, knowledge graphs, policies) is stored in SQLite on the deployment host. No data leaves the deployment boundary unless explicitly configured. This aligns with DPDP Act data localization requirements.
+
+[↑ Back to Top](#table-of-contents)
 
 ## References and Acknowledgments
 
@@ -806,3 +877,5 @@ KavachAI uses a hybrid cloud + local deployment model:
 ### Acknowledgments
 
 KavachAI acknowledges the foundational contributions of the research community whose work directly informs this system's architecture. The project name 'Kavach' (कवच) draws from the Sanskrit word meaning 'armor' or 'protective shield', reflecting the system's role as a protective governance layer for autonomous AI agents. This project was developed for the ISB Hackathon on Cybersecurity & AI Safety 2025-26, organized by the Indian School of Business (ISB Mohali), Punjab Police State Cyber Crime Division, and CyberPeace Foundation.
+
+[↑ Back to Top](#table-of-contents)
