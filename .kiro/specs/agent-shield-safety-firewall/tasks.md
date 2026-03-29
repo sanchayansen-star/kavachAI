@@ -6,8 +6,8 @@ This plan is ordered for maximum hackathon demo impact. The core pipeline (ident
 
 ## Tasks
 
-- [ ] 1. Project scaffolding and data models
-  - [ ] 1.1 Create project structure and configuration
+- [x] 1. Project scaffolding and data models
+  - [x] 1.1 Create project structure and configuration
     - Create `kavachai/backend/` directory tree matching design Section 15
     - Create `main.py` FastAPI entry point with CORS, lifespan, and router includes
     - Create `config.py` with environment-specific settings (local, docker, cloud)
@@ -15,7 +15,7 @@ This plan is ordered for maximum hackathon demo impact. The core pipeline (ident
     - Create `.env.example` with all required environment variables
     - _Requirements: 12.1, 12.2, 12.3, 20.5_
 
-  - [ ] 1.2 Implement core Pydantic data models
+  - [x] 1.2 Implement core Pydantic data models
     - Create `models/agent.py`: AgentIdentity, CapabilityToken, ToolScope, TrustLevel enum
     - Create `models/action.py`: ActionRequest, ActionVerdict, VerdictType enum, ActionAttestation
     - Create `models/audit.py`: AuditEntry, EvidencePackage
@@ -29,14 +29,14 @@ This plan is ordered for maximum hackathon demo impact. The core pipeline (ident
     - **Property 4: Trust Score Bounds** — verify trust_score stays in [0.0, 1.0] and trust_level matches defined ranges for any sequence of updates
     - **Validates: Requirements 16.1, 16.4**
 
-  - [ ] 1.4 Set up database layer
+  - [x] 1.4 Set up database layer
     - Create `db/database.py`: SQLite connection manager, schema initialization from design Section 6
     - Create all tables: audit_entries, agents, capability_tokens, policies, dfa_models, kill_chains, escalations, model_evaluations, knowledge_graphs, domain_ontologies, grounding_results, tenants
     - Create `db/redis_client.py`: Redis connection helper with all key patterns from design Section 7
     - _Requirements: 6.1, 12.4, 12.5_
 
-- [ ] 2. Agent identity and cryptographic core
-  - [ ] 2.1 Implement Agent Identity Manager
+- [x] 2. Agent identity and cryptographic core
+  - [x] 2.1 Implement Agent Identity Manager
     - Create `core/identity.py`: AgentIdentityManager with Ed25519 key pair generation (PyNaCl)
     - Implement agent registration (issue agent_id, key pair, capability scope, default trust level)
     - Implement capability token issuance with scoped tools, parameter constraints, expiry, and Ed25519 signature
@@ -48,7 +48,7 @@ This plan is ordered for maximum hackathon demo impact. The core pipeline (ident
     - **Property 11: Capability Token Scope Enforcement** — an agent can never invoke a tool not in its active CapabilityToken; out-of-scope calls always produce BLOCK with PRIVILEGE_VIOLATION
     - **Validates: Requirements 1.4, 1.5**
 
-  - [ ] 2.3 Implement API routes for agent management
+  - [x] 2.3 Implement API routes for agent management
     - Create `api/routes_eval.py`: POST /api/v1/agents/register, PUT /api/v1/agents/{agent_id}/capabilities, DELETE /api/v1/agents/{agent_id}
     - Implement X-API-Key authentication middleware
     - _Requirements: 1.1, 1.4, 1.6, 11.1_
