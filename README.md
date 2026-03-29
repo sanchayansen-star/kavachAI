@@ -184,6 +184,7 @@ KavachAI's architecture is grounded in 20 cutting-edge research papers from arXi
 | Document | Description |
 |----------|-------------|
 | [docs/TUTORIAL.md](docs/TUTORIAL.md) | Comprehensive getting started tutorial for first-time users |
+| [docs/ENTERPRISE-PRODUCTION-PLAN.md](docs/ENTERPRISE-PRODUCTION-PLAN.md) | AWS production deployment plan with Well-Architected Framework |
 | [specs/requirements.md](specs/requirements.md) | 31 requirements with user stories, acceptance criteria, and correctness properties |
 | [specs/design.md](specs/design.md) | Technical design — architecture, data models, APIs, database schema, DSL grammar |
 | [specs/knowledge-base.md](specs/knowledge-base.md) | Educational reference for AI/Agentic AI students covering 15 core concepts |
