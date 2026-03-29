@@ -1,0 +1,18 @@
+# KavachAI Demo — Customer Service DFA Workflow
+
+policy customer_service_workflow
+version "1.0"
+description "DFA behavioral model for customer service agents"
+
+workflow customer_service {
+  state start initial
+  state authenticated
+  state data_accessed
+  state response_sent accepting
+  state admin_access dangerous
+
+  start -> authenticated on tool_call("verify_identity")
+  authenticated -> data_accessed on tool_call("customer_lookup")
+  data_accessed -> response_sent on tool_call("send_response")
+  authenticated -> admin_access on tool_call("admin_*")
+}

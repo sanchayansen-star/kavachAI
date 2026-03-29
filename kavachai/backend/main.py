@@ -41,14 +41,21 @@ async def health():
     return {"status": "ok", "service": "kavachai", "version": "0.1.0"}
 
 
-# Router includes — uncomment as modules are implemented
-# from .api import routes_eval, routes_session, routes_policy
-# from .api import routes_escalation, routes_llm, routes_compliance
-# from .api import routes_grounding, websocket
-# app.include_router(routes_eval.router, prefix="/api/v1")
-# app.include_router(routes_session.router, prefix="/api/v1")
-# app.include_router(routes_policy.router, prefix="/api/v1")
-# app.include_router(routes_escalation.router, prefix="/api/v1")
-# app.include_router(routes_llm.router, prefix="/api/v1")
-# app.include_router(routes_compliance.router, prefix="/api/v1")
-# app.include_router(routes_grounding.router, prefix="/api/v1")
+# Router includes
+from .api import routes_eval
+from .api import routes_policy
+from .api import routes_session
+from .api import routes_compliance
+from .api import routes_escalation
+from .api import routes_grounding
+from .api import routes_llm
+from .api import websocket
+
+app.include_router(routes_eval.router, prefix="/api/v1")
+app.include_router(routes_policy.router)
+app.include_router(routes_session.router)
+app.include_router(routes_compliance.router)
+app.include_router(routes_escalation.router)
+app.include_router(routes_grounding.router)
+app.include_router(routes_llm.router)
+app.include_router(websocket.router)

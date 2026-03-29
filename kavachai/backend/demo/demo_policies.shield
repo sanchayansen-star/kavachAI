@@ -1,0 +1,30 @@
+# KavachAI Demo — Financial Services Safety Policies
+
+policy financial_services_safety
+version "1.0"
+description "Safety policies for financial services AI agents"
+
+rule block_unauthorized_payment {
+  when tool_call("payment_process")
+  check action.params.amount > 50000
+    and agent.trust_level != "trusted"
+  then escalate severity critical
+}
+
+rule temporal_data_access_restriction {
+  when tool_call("customer_lookup")
+  check within 5m of tool_call("external_api")
+  then block severity high
+}
+
+rule prevent_aadhaar_exfiltration {
+  when tool_call("send_email" | "external_api" | "webhook")
+  check data_from "customer_records" reaches "external"
+  then quarantine severity critical
+}
+
+rule always_mask_pii {
+  when always(tool_call("*"))
+  check output contains_pii("aadhaar" | "pan" | "mobile")
+  then flag severity medium
+}

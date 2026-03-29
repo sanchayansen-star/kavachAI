@@ -4,12 +4,23 @@ from fastapi import APIRouter, HTTPException, Header
 from pydantic import BaseModel
 
 from ..core.identity import AgentIdentityManager
+from ..core.pipeline import EvalPipeline
+from ..core.policy_engine import PolicyEngine
+from ..models.action import ActionRequest, ActionVerdict
 from ..models.agent import ToolScope
+from ..threat.detector import ThreatDetector
 
 router = APIRouter(tags=["agents"])
 
-# Singleton identity manager (will be replaced with DI later)
+# Singleton instances (will be replaced with DI later)
 identity_mgr = AgentIdentityManager()
+policy_engine = PolicyEngine()
+threat_detector = ThreatDetector()
+eval_pipeline = EvalPipeline(
+    identity_mgr=identity_mgr,
+    policy_engine=policy_engine,
+    threat_detector=threat_detector,
+)
 
 
 class RegisterAgentRequest(BaseModel):
@@ -87,3 +98,13 @@ async def revoke_agent(
     if not success:
         raise HTTPException(status_code=404, detail="Agent not found")
     return {"revoked": True, "agent_id": agent_id}
+
+
+@router.post("/evaluate", response_model=ActionVerdict)
+async def evaluate_action(
+    request: ActionRequest,
+    x_api_key: str = Header(...),
+):
+    """Run an ActionRequest through the Zero Trust evaluation pipeline."""
+    verdict = await eval_pipeline.evaluate(request)
+    return verdict

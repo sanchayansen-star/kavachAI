@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  kavachai:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8000:8000"
+      - "3001:3001"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=sqlite:///data/kavachai.db
+      - ENVIRONMENT=docker
+      - API_KEY=${API_KEY:-kavachai-demo-key}
+    volumes:
+      - ./data:/data
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"

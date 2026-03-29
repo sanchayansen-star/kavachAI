@@ -1,0 +1,16 @@
+{
+  "ontology_id": "financial-services-ontology",
+  "name": "Financial Services Domain Ontology",
+  "domain": "financial_services",
+  "concepts": [
+    {"name": "payment", "properties": ["amount", "currency", "recipient"], "constraints": ["amount > 0", "currency in [INR, USD]"]},
+    {"name": "customer_data", "properties": ["name", "aadhaar", "pan", "mobile"], "constraints": ["aadhaar is PII", "pan is PII", "mobile is PII"]},
+    {"name": "account", "properties": ["account_id", "balance", "type"], "constraints": ["balance >= 0"]},
+    {"name": "kyc", "properties": ["verified", "documents"], "constraints": ["verified is boolean"]}
+  ],
+  "relationships": [
+    {"from": "customer_data", "to": "account", "type": "owns"},
+    {"from": "account", "to": "payment", "type": "initiates"},
+    {"from": "customer_data", "to": "kyc", "type": "has"}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "graph_id": "financial-services-kg",
+  "name": "Financial Services Knowledge Graph",
+  "domain": "financial_services",
+  "nodes": [
+    {"id": "acc-001", "type": "account", "label": "Savings Account", "properties": {"balance": 150000, "currency": "INR"}},
+    {"id": "acc-002", "type": "account", "label": "Current Account", "properties": {"balance": 500000, "currency": "INR"}},
+    {"id": "cust-001", "type": "customer", "label": "Customer A", "properties": {"kyc_verified": true, "risk_level": "low"}},
+    {"id": "cust-002", "type": "customer", "label": "Customer B", "properties": {"kyc_verified": true, "risk_level": "medium"}},
+    {"id": "txn-001", "type": "transaction", "label": "Fund Transfer", "properties": {"max_amount": 100000, "requires_otp": true}}
+  ],
+  "edges": [
+    {"from": "cust-001", "to": "acc-001", "relation": "owns"},
+    {"from": "cust-002", "to": "acc-002", "relation": "owns"},
+    {"from": "acc-001", "to": "txn-001", "relation": "can_perform"},
+    {"from": "acc-002", "to": "txn-001", "relation": "can_perform"}
+  ]
+}
