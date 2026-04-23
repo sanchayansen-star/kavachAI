@@ -255,15 +255,20 @@ This is the most critical pillar for KavachAI — the product itself is a securi
 
 #### Data Classification
 
-| Data Type | Classification | Storage | Encryption | Retention |
-|-----------|---------------|---------|------------|-----------|
-| Audit entries (hash chain) | Confidential | Aurora + S3 backup | AES-256 (KMS) | 7 years (regulatory) |
-| Evidence packages | Restricted | S3 Object Lock (WORM) | AES-256 (KMS) | 7 years |
-| Agent private keys | Secret | KMS (never leaves HSM) | KMS CMK | Until revoked |
-| PII (pre-masking) | Restricted | In-memory only | TLS in transit | Never persisted |
-| DSL policies | Internal | S3 + Aurora | AES-256 | Versioned indefinitely |
-| Dashboard sessions | Internal | Cognito + ElastiCache | TLS + AES-256 | 24 hours |
-| LLM API keys | Secret | Secrets Manager | KMS CMK | Until rotated |
+| Data Type | Classification | Storage | Encryption | Retention | Jurisdiction Notes |
+|-----------|---------------|---------|------------|-----------|-------------------|
+| Audit entries (hash chain) | Confidential | Aurora + S3 backup | AES-256 (KMS) | 7 years (regulatory) | Stored in tenant's jurisdiction region |
+| Evidence packages | Restricted | S3 Object Lock (WORM) | AES-256 (KMS) | 7 years | Region-locked per jurisdiction |
+| Agent private keys | Secret | KMS (never leaves HSM) | KMS CMK | Until revoked | Region-specific KMS keys |
+| PII (pre-masking) | Restricted | In-memory only | TLS in transit | Never persisted | GDPR: right to erasure applies |
+| DSL policies | Internal | S3 + Aurora | AES-256 | Versioned indefinitely | May contain jurisdiction-specific rules |
+| Dashboard sessions | Internal | Cognito + ElastiCache | TLS + AES-256 | 24 hours | — |
+| LLM API keys | Secret | Secrets Manager | KMS CMK | Until rotated | — |
+| GDPR consent records | Confidential | Aurora | AES-256 (KMS) | Duration of processing + 3 years | EU region only (eu-west-1) |
+| GDPR erasure requests | Confidential | Aurora | AES-256 (KMS) | 3 years after completion | EU region only |
+| FCA/PRA compliance records | Confidential | Aurora + S3 backup | AES-256 (KMS) | 7 years (FCA requirement) | UK region only (eu-west-2) |
+| SM&CR accountability maps | Restricted | Aurora | AES-256 (KMS) | Duration of appointment + 6 years | UK region only |
+| Cross-border transfer logs | Confidential | Aurora | AES-256 (KMS) | 5 years | Stored in originating region |
 
 ### Pillar 3: Reliability
 
@@ -533,6 +538,8 @@ Shard 3: Pub/sub + escalations
 
 ### VPC Design
 
+#### India Region (ap-south-1, Mumbai) — Primary for Indian tenants
+
 ```
 VPC: 10.0.0.0/16 (ap-south-1, Mumbai)
 
@@ -552,6 +559,43 @@ AZ-c (ap-south-1c):
   Data:    10.0.9.0/24  (ElastiCache replica)
 ```
 
+#### EU Region (eu-west-1, Ireland) — Primary for EU/GDPR tenants
+
+```
+VPC: 10.1.0.0/16 (eu-west-1, Ireland)
+
+AZ-a (eu-west-1a):
+  Public:  10.1.1.0/24  (NAT Gateway, ALB)
+  Private: 10.1.4.0/24  (ECS tasks)
+  Data:    10.1.7.0/24  (Aurora, ElastiCache)
+
+AZ-b (eu-west-1b):
+  Public:  10.1.2.0/24  (NAT Gateway)
+  Private: 10.1.5.0/24  (ECS tasks)
+  Data:    10.1.8.0/24  (Aurora replica, ElastiCache replica)
+
+AZ-c (eu-west-1c):
+  Public:  10.1.3.0/24  (NAT Gateway)
+  Private: 10.1.6.0/24  (ECS tasks)
+  Data:    10.1.9.0/24  (ElastiCache replica)
+```
+
+#### UK Region (eu-west-2, London) — Primary for UK/FCA tenants
+
+```
+VPC: 10.2.0.0/16 (eu-west-2, London)
+
+AZ-a (eu-west-2a):
+  Public:  10.2.1.0/24  (NAT Gateway, ALB)
+  Private: 10.2.4.0/24  (ECS tasks)
+  Data:    10.2.7.0/24  (Aurora, ElastiCache)
+
+AZ-b (eu-west-2b):
+  Public:  10.2.2.0/24  (NAT Gateway)
+  Private: 10.2.5.0/24  (ECS tasks)
+  Data:    10.2.8.0/24  (Aurora replica, ElastiCache replica)
+```
+
 ### Security Group Rules
 
 | Security Group | Inbound | Outbound |
@@ -568,6 +612,35 @@ For compliance with India's DPDP Act 2023:
 - **DR region:** ap-south-2 (Hyderabad) — encrypted replication within India
 - **No cross-border data transfer** unless explicit consent is recorded
 - **S3 bucket policy** denies access from non-Indian IP ranges for PII-containing buckets
+
+### GDPR Data Residency (EU)
+
+For compliance with the EU General Data Protection Regulation:
+- **EU primary region:** eu-west-1 (Ireland) — all EU personal data at rest stays within the EU
+- **EU DR region:** eu-central-1 (Frankfurt) — encrypted replication within the EU
+- **Cross-border transfer controls:** Data transfers outside the EU/EEA require adequacy decisions, Standard Contractual Clauses (SCCs), or Binding Corporate Rules (BCRs)
+- **S3 bucket policy** enforces EU data residency — denies replication to non-EU regions for EU tenant data
+- **Right to erasure:** S3 lifecycle policies and Aurora deletion procedures support GDPR Article 17 requests
+- **72-hour breach notification:** CloudWatch alarms trigger automated notification workflows to the relevant supervisory authority
+
+### UK Data Residency
+
+For compliance with UK GDPR and FCA/PRA requirements:
+- **UK primary region:** eu-west-2 (London) — all UK personal data at rest stays in the UK
+- **UK DR region:** eu-west-1 (Ireland) — permitted under UK adequacy decision for EU
+- **FCA operational resilience:** Important business services mapped to infrastructure dependencies with defined impact tolerances
+- **PRA SS1/23:** Model inventory and risk tiering data stored in UK region with audit trail
+
+### Multi-Region Deployment Architecture
+
+Tenants are assigned to a deployment region based on their jurisdiction configuration:
+
+| Jurisdiction | Primary Region | DR Region | Data Residency Enforcement |
+|-------------|---------------|-----------|---------------------------|
+| India | ap-south-1 (Mumbai) | ap-south-2 (Hyderabad) | DPDP Act — data stays in India |
+| EU | eu-west-1 (Ireland) | eu-central-1 (Frankfurt) | GDPR — data stays in EU/EEA |
+| UK | eu-west-2 (London) | eu-west-1 (Ireland) | UK GDPR — data stays in UK (EU adequacy) |
+| Multi-jurisdiction | Nearest compliant region | Cross-region encrypted replication | Per-tenant jurisdiction rules applied |
 
 ---
 

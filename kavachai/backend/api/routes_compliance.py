@@ -1,4 +1,4 @@
-"""Compliance API routes — DPDP status, incident export/report."""
+"""Compliance API routes — DPDP, GDPR, FCA/PRA status, incident export/report."""
 
 from __future__ import annotations
 
@@ -41,3 +41,35 @@ async def get_seven_sutras():
         has_grounding=False,
     )
     return {"scores": scores.to_dict()}
+
+
+# ---------------------------------------------------------------------------
+# GDPR (EU) compliance endpoint
+# ---------------------------------------------------------------------------
+
+from kavachai.backend.compliance.gdpr_engine import GDPRComplianceEngine
+
+_gdpr_engine = GDPRComplianceEngine()
+
+
+@router.get("/gdpr-status")
+async def get_gdpr_status():
+    """Get current GDPR compliance status (EU jurisdiction)."""
+    status = _gdpr_engine.get_status()
+    return status.to_dict()
+
+
+# ---------------------------------------------------------------------------
+# UK FCA / PRA compliance endpoint
+# ---------------------------------------------------------------------------
+
+from kavachai.backend.compliance.fca_pra_engine import FinancialRegulatoryEngine
+
+_fca_pra_engine = FinancialRegulatoryEngine()
+
+
+@router.get("/fca-pra-status")
+async def get_fca_pra_status():
+    """Get current UK FCA/PRA financial regulatory compliance status."""
+    status = _fca_pra_engine.get_status()
+    return status.to_dict()

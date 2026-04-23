@@ -11,8 +11,9 @@ customer data, call APIs. KavachAI is the security firewall that sits between th
 and your systems. Every action an agent tries to take passes through our 10-stage safety
 check in under 100 milliseconds. We catch prompt injection attacks, data exfiltration,
 privilege escalation, and policy violations before they happen — not after. Think of it as
-a network firewall, but purpose-built for AI agents, with built-in compliance for DPDP Act
-and India's AI governance guidelines.
+a network firewall, but purpose-built for AI agents, with built-in multi-jurisdiction
+compliance for DPDP Act (India), GDPR (EU), FCA/PRA (UK), and international AI governance
+frameworks.
 
 ---
 
@@ -40,10 +41,14 @@ the agent decision layer.
 - **DPDP Act 2023** penalties up to ₹250 crore for data protection violations
 - **India AI Governance Guidelines 2025** require accountability, transparency, and fairness
 - **CERT-In** mandates incident reporting within 6 hours of detection
-- **EU AI Act** requires right-to-explanation for automated decisions
+- **GDPR** fines up to €20 million or 4% of global annual turnover (whichever is higher)
+- **EU AI Act** requires right-to-explanation for automated decisions, conformity assessments for high-risk AI
+- **FCA (UK)** Consumer Duty fines with no upper cap — recent fines have exceeded £100 million
+- **PRA SS1/23** requires model risk management for all AI/ML models used in UK financial services
+- **DORA** mandates ICT risk management and incident reporting for EU financial entities
 
 An AI agent that processes customer data without proper governance exposes the enterprise to
-all of these simultaneously.
+all of these simultaneously — across every jurisdiction it operates in.
 
 ---
 
@@ -93,12 +98,25 @@ at the semantic layer of AI agent behavior, not at the network or endpoint layer
 
 ### 2. Regulatory Compliance
 
-| Regulation | KavachAI Coverage |
-|-----------|-------------------|
-| DPDP Act 2023 | Real-time PII masking (Aadhaar, PAN, mobile, UPI), consent verification, data localization enforcement, breach notification triggers |
-| India AI Seven Sutras | Quantified compliance scores across all 7 principles (Trust, People First, Innovation, Fairness, Accountability, Understandable, Safety) |
-| CERT-In | Automated incident report generation in CERT-In format with cryptographically signed evidence packages |
-| EU AI Act | 3-layer decision explanations (LLM reasoning, policy evaluation, user-facing summary) in English and Hindi |
+KavachAI is a **jurisdiction-aware** compliance platform. Tenants configure which jurisdictions apply, and all relevant compliance engines run in parallel.
+
+| Regulation | Jurisdiction | KavachAI Coverage |
+|-----------|-------------|-------------------|
+| DPDP Act 2023 | India | Real-time PII masking (Aadhaar, PAN, mobile, UPI), consent verification, data localization enforcement, breach notification triggers |
+| India AI Seven Sutras | India | Quantified compliance scores across all 7 principles (Trust, People First, Innovation, Fairness, Accountability, Understandable, Safety) |
+| CERT-In | India | Automated incident report generation in CERT-In format with cryptographically signed evidence packages |
+| GDPR | EU | Lawful basis tracking, right to erasure, data portability, 72-hour breach notification, DPIA status, cross-border transfer controls (SCCs, BCRs, adequacy decisions) |
+| EU AI Act (2024/1689) | EU | Risk classification, 3-layer decision explanations (right to explanation), transparency obligations, conformity assessment support for high-risk AI |
+| DORA | EU | ICT risk management status, incident reporting, third-party risk management for financial entities |
+| MiFID II | EU | Algorithmic trading controls, best execution, transaction reporting |
+| PSD2 | EU | Strong customer authentication tracking, open banking security |
+| EBA Guidelines on AI/ML | EU | Model risk management, explainability for credit decisions |
+| UK GDPR + DPA 2018 | UK | Post-Brexit UK data protection (mirrors EU GDPR with UK-specific provisions) |
+| FCA Consumer Duty | UK | Treating customers fairly, good outcomes, operational resilience |
+| PRA SS1/23 | UK | Model risk management, capital adequacy, stress testing |
+| SM&CR | UK | Individual accountability mapping — which senior manager is responsible for each AI system |
+| UK AI Regulation | UK | Principles-based compliance: safety, transparency, fairness, accountability, contestability |
+| NIST AI RMF 1.0 | International | Govern, Map, Measure, Manage functions |
 
 This is not a periodic audit — it is continuous, real-time compliance enforcement on every
 agent action.
@@ -139,13 +157,17 @@ No vendor lock-in. No agent code changes required.
 
 ### Cost of Inaction
 
-| Risk | Potential Cost |
-|------|---------------|
-| DPDP Act violation (single incident) | Up to ₹250 crore |
-| Data breach (average, India) | ₹17.9 crore (IBM Cost of Data Breach 2024) |
-| Reputation damage | Unquantifiable but significant |
-| Regulatory investigation | ₹1-5 crore in legal and compliance costs |
-| Customer churn from trust erosion | 5-15% revenue impact |
+| Risk | Jurisdiction | Potential Cost |
+|------|-------------|---------------|
+| DPDP Act violation (single incident) | India | Up to ₹250 crore |
+| GDPR violation (single incident) | EU | Up to €20 million or 4% of global annual turnover |
+| FCA fine (Consumer Duty breach) | UK | No upper cap — recent fines have exceeded £100 million |
+| PRA enforcement action | UK | Unlimited — includes potential restriction of business activities |
+| Data breach (average, India) | India | ₹17.9 crore (IBM Cost of Data Breach 2024) |
+| Data breach (average, EU) | EU | €4.35 million (IBM Cost of Data Breach 2024) |
+| Reputation damage | Global | Unquantifiable but significant |
+| Regulatory investigation | Multi | ₹1-5 crore / €500K-2M in legal and compliance costs per jurisdiction |
+| Customer churn from trust erosion | Global | 5-15% revenue impact |
 
 ### Cost of KavachAI
 
@@ -183,8 +205,12 @@ providing 24/7 real-time evaluation of every agent action.
 | Agent-level threat detection | ✅ Purpose-built | ❌ Network/endpoint only | ⚠️ Basic prompt filtering |
 | Formal policy language (DSL) | ✅ With temporal logic and DFA | ❌ | ❌ |
 | Cryptographic audit trail | ✅ SHA-256 hash chains | ⚠️ Log-based (mutable) | ❌ |
+| Multi-jurisdiction compliance | ✅ India + EU + UK (jurisdiction-aware) | ❌ | ❌ |
 | DPDP Act compliance | ✅ Real-time enforcement | ❌ | ❌ |
+| GDPR compliance | ✅ Lawful basis, erasure, portability, breach notification | ❌ | ❌ |
+| UK FCA/PRA compliance | ✅ Consumer Duty, SS1/23, SM&CR | ❌ | ❌ |
 | India AI Seven Sutras | ✅ Quantified scoring | ❌ | ❌ |
+| EU AI Act conformity | ✅ Risk classification, right to explanation | ❌ | ⚠️ Basic |
 | MCP protocol native | ✅ Transparent proxy | ❌ | ❌ |
 | Kill chain analysis for agents | ✅ STAC detection | ⚠️ Network kill chains only | ❌ |
 | Multi-agent governance | ✅ Delegation limits, collusion detection | ❌ | ❌ |
@@ -216,7 +242,7 @@ providing 24/7 real-time evaluation of every agent action.
 | Cache | ElastiCache Redis | Real-time session state, pub/sub for dashboard, rate limiting |
 | Crypto | Ed25519 / SHA-256 | Industry-standard signing and hashing, hardware-backed via KMS |
 | Protocol | MCP (Model Context Protocol) | Industry standard for agent-tool communication |
-| Infrastructure | AWS (ECS Fargate, Aurora, S3) | Serverless compute, data residency in India (Mumbai region) |
+| Infrastructure | AWS (ECS Fargate, Aurora, S3) | Serverless compute, multi-region deployment (India: Mumbai, EU: Ireland, UK: London) |
 
 Full AWS architecture with Well-Architected Framework compliance is documented in
 [ENTERPRISE-PRODUCTION-PLAN.md](ENTERPRISE-PRODUCTION-PLAN.md).

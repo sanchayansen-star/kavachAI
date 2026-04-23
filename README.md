@@ -1,6 +1,6 @@
 # KavachAI (कवच) — Zero Trust Safety Firewall for Agentic AI
 
-> A production-grade governance platform for autonomous AI agents, built for the ISB Hackathon on Cybersecurity & AI Safety 2025-26.
+> A production-grade, multi-jurisdiction AI governance platform for autonomous AI agents, built for the ISB Hackathon on Cybersecurity & AI Safety 2025-26. Jurisdiction-aware compliance across India, EU, and UK regulatory frameworks.
 
 **Kavach** (कवच) means "armor" or "protective shield" in Sanskrit — reflecting the system's role as a protective governance layer for autonomous AI agents.
 
@@ -18,8 +18,10 @@ Your AI Agent  ──►  KavachAI Firewall  ──►  Tools (APIs, databases, 
                     10-stage pipeline:
                     ✓ Identity  ✓ Capability Token
                     ✓ DSL Policy  ✓ Threat Detection
-                    ✓ DPDP Compliance  ✓ Ethics
-                    ✓ PII Masking  ✓ LLM Reasoning
+                    ✓ Multi-Jurisdiction Compliance
+                      (DPDP / GDPR / FCA-PRA)
+                    ✓ Ethics  ✓ PII Masking
+                    ✓ LLM Reasoning
                     ✓ Semantic Grounding  ✓ Attestation
                          │
                     ALLOW / BLOCK / ESCALATE / QUARANTINE
@@ -38,6 +40,8 @@ Your AI Agent  ──►  KavachAI Firewall  ──►  Tools (APIs, databases, 
 | Hallucination Detection | Compare agent claims against attestation records, detect fabrication/misstatement | ✅ Implemented |
 | AI Ethics Engine | India-specific bias detection (gender, caste, religion, regional), toxicity filtering | ✅ Implemented |
 | DPDP Act Compliance | Aadhaar/PAN masking, consent verification, data localization, breach notification | ✅ Implemented |
+| GDPR Compliance | Lawful basis tracking, right to erasure, data portability, 72-hour breach notification, cross-border transfers | ✅ Implemented |
+| UK FCA/PRA Compliance | Consumer Duty, SS1/23 model risk, SM&CR accountability, DORA ICT risk, MiFID II controls | ✅ Implemented |
 | Seven Sutras Compliance | Full mapping to India's AI Governance Guidelines 2025 | ✅ Implemented |
 | Cryptographic Audit Trail | SHA-256 hash chains, evidence packages, session replay, CERT-In reporting | ✅ Implemented |
 | SOC Dashboard | 10-page real-time dashboard: threats, kill chains, escalations, forensics, compliance | ✅ Implemented |
@@ -119,6 +123,8 @@ curl http://localhost:8000/api/v1/sessions/s1/audit-trail -H "X-API-Key: demo"
 # Check compliance
 curl http://localhost:8000/api/v1/compliance/dpdp-status
 curl http://localhost:8000/api/v1/compliance/seven-sutras
+curl http://localhost:8000/api/v1/compliance/gdpr-status
+curl http://localhost:8000/api/v1/compliance/fca-pra-status
 
 # Manage escalations
 curl http://localhost:8000/api/v1/escalations
@@ -168,7 +174,7 @@ workflow customer_service {
 | Kill Chains | Multi-stage attack visualization with STAC detection |
 | Escalations | Human-in-the-loop approve/reject queue |
 | Forensics | Step-by-step session replay with 3-layer decision explanations |
-| Compliance | DPDP Act status + India AI Seven Sutras radar |
+| Compliance | DPDP Act + GDPR + UK FCA/PRA status + India AI Seven Sutras radar |
 | Agents | Agent registry with trust scores and capability scopes |
 | Policies | DSL policy viewer with syntax highlighting |
 | Model Eval | LLM safety scores and red team results |
@@ -212,7 +218,7 @@ kavachai/
 │   │   ├── core/                   # Pipeline, policy engine, DSL, identity, trust, DFA
 │   │   ├── threat/                 # 5 threat sub-detectors + orchestrator
 │   │   ├── audit/                  # Hash chain, evidence packages, session replay
-│   │   ├── compliance/             # PII masking, DPDP, Seven Sutras, CERT-In
+│   │   ├── compliance/             # PII masking, DPDP, GDPR, FCA/PRA, Seven Sutras, CERT-In
 │   │   ├── ethics/                 # Bias detection, toxicity, ethics engine
 │   │   ├── explain/                # Reasoning capture, 3-layer explanations
 │   │   ├── grounding/              # Semantic grounding, hallucination detection
@@ -233,13 +239,42 @@ kavachai/
 
 ## Regulatory Alignment
 
+KavachAI is a **jurisdiction-aware, multi-jurisdiction AI governance platform**. Tenants can configure which jurisdictions apply to them.
+
+### India
+
 | Framework | Coverage |
 |-----------|---------|
-| DPDP Act 2023 (India) | Consent, data localization, PII masking, breach notification |
+| DPDP Act 2023 | Consent management, data localization, PII masking (Aadhaar, PAN, UPI, mobile), breach notification |
 | India AI Governance 2025 | Seven Sutras compliance mapping and reporting |
+| CERT-In | Incident reporting format and cryptographically signed evidence packages |
+
+### European Union
+
+| Framework | Coverage |
+|-----------|---------|
+| GDPR (General Data Protection Regulation) | Lawful basis tracking, right to erasure, data portability, DPO requirements, 72-hour breach notification, cross-border transfer controls (SCCs, BCRs, adequacy decisions) |
+| EU AI Act (2024/1689) | Risk classification (unacceptable / high / limited / minimal), transparency obligations, right to explanation, conformity assessments for high-risk AI |
+| DORA (Digital Operational Resilience Act) | ICT risk management for financial entities, incident reporting, third-party risk management |
+| MiFID II | Algorithmic trading controls, best execution obligations, transaction reporting |
+| PSD2 (Payment Services Directive) | Strong customer authentication (SCA), open banking security |
+| EBA Guidelines on AI/ML | Model risk management, explainability requirements for credit decisions |
+
+### United Kingdom
+
+| Framework | Coverage |
+|-----------|---------|
+| UK GDPR + DPA 2018 | Post-Brexit UK data protection (mirrors EU GDPR with UK-specific provisions) |
+| FCA (Financial Conduct Authority) | Consumer Duty compliance, treating customers fairly, operational resilience |
+| PRA SS1/23 (Prudential Regulation Authority) | Model risk management, capital adequacy, stress testing |
+| SM&CR (Senior Managers & Certification Regime) | Individual accountability mapping for AI decisions |
+| UK AI Regulation (pro-innovation) | Principles-based: safety, transparency, fairness, accountability, contestability |
+
+### International
+
+| Framework | Coverage |
+|-----------|---------|
 | NIST AI RMF 1.0 | Govern, Map, Measure, Manage functions |
-| EU AI Act (2024/1689) | Right to explanation, transparency obligations |
-| CERT-In | Incident reporting format and evidence packages |
 
 ## License
 

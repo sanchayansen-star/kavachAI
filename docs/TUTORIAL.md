@@ -509,11 +509,17 @@ curl http://localhost:8000/api/v1/sessions/sess-001/audit-trail \
 ### 7.4 Check Compliance Status
 
 ```bash
-# DPDP Act compliance
+# DPDP Act compliance (India)
 curl http://localhost:8000/api/v1/compliance/dpdp-status
 
 # India AI Seven Sutras
 curl http://localhost:8000/api/v1/compliance/seven-sutras
+
+# GDPR compliance (EU)
+curl http://localhost:8000/api/v1/compliance/gdpr-status
+
+# UK FCA/PRA compliance
+curl http://localhost:8000/api/v1/compliance/fca-pra-status
 ```
 
 ### 7.5 Manage Escalations
@@ -552,8 +558,10 @@ Step-by-step replay of any session. Select an action from the timeline to see th
 The hash chain indicator at the top confirms audit trail integrity.
 
 ### Compliance
-Two panels:
-- **DPDP Act 2023:** Consent coverage, PII masking rate, data localization status
+Four panels covering multi-jurisdiction compliance:
+- **DPDP Act 2023 (India):** Consent coverage, PII masking rate, data localization status
+- **GDPR (EU):** Lawful basis coverage, right to erasure requests, breach notification status, cross-border transfer compliance
+- **UK FCA/PRA:** Consumer Duty status, SS1/23 model risk, SM&CR accountability mapping
 - **Seven Sutras:** Radar chart showing compliance with India's AI governance principles (Trust, People First, Innovation, Fairness, Accountability, Understandable, Safety)
 
 ### Agents
@@ -614,7 +622,9 @@ This lets safety-aware agents proactively check permissions and report threats.
 
 ## 10. Compliance & Governance
 
-### DPDP Act 2023 (India's Data Protection Law)
+KavachAI is a **jurisdiction-aware, multi-jurisdiction compliance framework**. Tenants can configure which jurisdictions apply to them (India, EU, UK, or any combination). All compliance engines run in parallel during the evaluation pipeline.
+
+### 10.1 DPDP Act 2023 (India's Data Protection Law)
 
 KavachAI enforces:
 - **PII Masking:** Automatically detects and masks Aadhaar numbers (→ `XXXX XXXX 1234`), PAN cards, Indian mobile numbers, UPI IDs, and email addresses
@@ -622,9 +632,9 @@ KavachAI enforces:
 - **Data Localization:** Enforces that data stays within configured boundaries
 - **Breach Notification:** Triggers alerts when potential data breaches are detected
 
-### India AI Seven Sutras
+### 10.2 India AI Seven Sutras
 
-KavachAI maps its capabilities to India's 7 AI governance principles:
+KavachAI maps its capabilities to India's 7 AI governance principles. The Seven Sutras engine is part of the broader multi-jurisdiction compliance framework and can be used alongside GDPR and FCA/PRA compliance.
 
 | Sutra | KavachAI Feature |
 |-------|-----------------|
@@ -636,9 +646,62 @@ KavachAI maps its capabilities to India's 7 AI governance principles:
 | Understandable | 3-layer decision explanations (LLM, policy, user-facing) |
 | Safety | Threat detection, policy engine, kill chain analysis |
 
-### CERT-In Reporting
+### 10.3 CERT-In Reporting
 
 For serious incidents, KavachAI can generate structured incident reports in CERT-In format, complete with cryptographically signed evidence packages suitable for law enforcement.
+
+### 10.4 GDPR (EU General Data Protection Regulation)
+
+KavachAI provides a dedicated GDPR compliance engine covering:
+
+- **Lawful Basis Tracking:** Records and verifies the lawful basis for every data processing activity (consent, legitimate interest, contract, legal obligation, vital interest, public task)
+- **Right to Erasure:** Tracks "right to be forgotten" requests and ensures data subjects can request deletion of their personal data
+- **Data Portability:** Supports data export in machine-readable formats for data subject access requests (DSARs)
+- **72-Hour Breach Notification:** Monitors breach detection timestamps and alerts when the 72-hour notification window to the supervisory authority is approaching
+- **Data Protection Impact Assessment (DPIA):** Tracks DPIA status for high-risk processing activities
+- **Cross-Border Transfer Controls:** Validates that international data transfers have appropriate safeguards — adequacy decisions, Standard Contractual Clauses (SCCs), or Binding Corporate Rules (BCRs)
+- **PII Detection (EU):** Detects and masks EU-specific PII patterns including IBAN, EU national IDs, and EU/UK phone numbers
+
+```bash
+# Check GDPR compliance status
+curl http://localhost:8000/api/v1/compliance/gdpr-status
+```
+
+### 10.5 EU AI Act (2024/1689)
+
+KavachAI maps to the EU AI Act requirements:
+
+- **Risk Classification:** AI systems are classified as unacceptable, high, limited, or minimal risk
+- **Transparency Obligations:** 3-layer decision explanations (LLM reasoning, policy evaluation, user-facing summary) satisfy the right-to-explanation requirement
+- **Conformity Assessments:** For high-risk AI systems, KavachAI provides audit trails and evidence packages that support conformity assessment documentation
+- **Human Oversight:** The escalation queue ensures human-in-the-loop review for high-risk decisions
+
+### 10.6 UK FCA & PRA Compliance
+
+KavachAI includes a dedicated engine for UK financial regulatory compliance:
+
+- **FCA Consumer Duty:** Tracks compliance with the FCA's Consumer Duty requirements — ensuring AI systems treat customers fairly and deliver good outcomes
+- **PRA SS1/23 Model Risk Management:** Monitors model risk management status including model validation, ongoing monitoring, and documentation requirements
+- **SM&CR Accountability:** Maps which Senior Manager is responsible for each AI system, ensuring clear individual accountability for AI decisions
+- **DORA ICT Risk Management:** Tracks ICT risk management status for EU/UK financial entities, including incident reporting and third-party risk
+- **MiFID II Controls:** Monitors algorithmic trading controls, best execution obligations, and transaction reporting requirements
+
+```bash
+# Check UK FCA/PRA compliance status
+curl http://localhost:8000/api/v1/compliance/fca-pra-status
+```
+
+### 10.7 Multi-Jurisdiction PII Masking
+
+KavachAI's PII masker supports patterns across all jurisdictions:
+
+| Jurisdiction | PII Patterns |
+|-------------|-------------|
+| India | Aadhaar (12-digit), PAN (ABCDE1234F), Indian mobile (+91), UPI ID |
+| EU/UK | IBAN, UK National Insurance Number (AB123456C), UK Sort Code, EU/UK phone numbers (+44, +33, +49), Passport numbers |
+| Global | Email addresses |
+
+All PII patterns are applied simultaneously — a single text can have Indian, EU, and UK PII detected and masked in one pass.
 
 ---
 
