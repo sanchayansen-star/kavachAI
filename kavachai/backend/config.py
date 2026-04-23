@@ -5,7 +5,10 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     ENVIRONMENT: str = "local"  # local | docker | cloud
+    DATABASE_BACKEND: str = "sqlite"  # sqlite | mongodb
     DATABASE_URL: str = "sqlite:///data/kavachai.db"
+    MONGODB_URI: str = ""  # mongodb+srv://user:pass@cluster.mongodb.net/kavachai
+    MONGODB_DATABASE: str = "kavachai"
     REDIS_URL: str = "redis://localhost:6379"
 
     # LLM provider keys
