@@ -6,6 +6,16 @@
 
 ---
 
+## Live Demo
+
+| Surface | URL |
+|---------|-----|
+| SOC Dashboard | [kavach-ai-nu.vercel.app](https://kavach-ai-nu.vercel.app) |
+| REST API (Swagger) | [kavachai-production.up.railway.app/docs](https://kavachai-production.up.railway.app/docs) |
+| Health Check | [kavachai-production.up.railway.app/health](https://kavachai-production.up.railway.app/health) |
+| Source Code (GitHub) | [github.com/sanchayansen-star/kavachAI](https://github.com/sanchayansen-star/kavachAI) |
+| Source Code (GitLab) | [gitlab.com/sanchayan1/kavachai](https://gitlab.com/sanchayan1/kavachai) |
+
 ## What is KavachAI?
 
 KavachAI is a Zero Trust safety firewall that sits between AI agents and their tools, enforcing safety policies, detecting threats, ensuring regulatory compliance, and providing tamper-proof audit trails — all in real time.
