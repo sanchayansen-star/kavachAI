@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install dependencies first (cached layer)
+# Install dependencies
 COPY kavachai/backend/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -12,7 +12,7 @@ COPY kavachai/ ./kavachai/
 # Create data directory for SQLite
 RUN mkdir -p /data
 
-# Railway sets PORT dynamically
+# Railway sets PORT dynamically via environment variable
 ENV PORT=8000
 
 EXPOSE ${PORT}

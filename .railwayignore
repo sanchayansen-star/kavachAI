@@ -1,0 +1,5 @@
+kavachai/dashboard/node_modules
+kavachai/dashboard/.next
+.git
+data/
+*.db
